@@ -1,0 +1,309 @@
+{% extends 'base.html' %}
+{% block style %}
+    <style>
+        .dock-mom {
+            width: 30vw;
+            height: 50px;
+            border: 2px solid black;
+            display: inline-block;
+            border-radius: 30px;
+            position: relative;
+            background-color: #e4f6ff;
+        }
+
+        img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .dock-number {
+            text-align: center;
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            top: 9px;
+            right: 30px;
+            font-size: 30px;
+        }
+
+        #calender-img {
+            margin-left: 9px;
+            width: 45px;
+            height: 45px;
+        }
+
+        #farmer-img {
+            margin-top: 2px;
+            margin-left: 9px;
+            width: 40px;
+            height: 45px;
+        }
+
+        #icecream-img {
+            margin-top: 7px;
+            margin-left: 9px;
+            width: 40px;
+            height: 35px;
+        }
+
+        body {
+            background: #eeeeee;
+            position: relative;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .top-dock {
+            position: absolute;
+        }
+
+        .calender-dock {
+            left: 67vw;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 60px;
+        }
+
+        .header {
+            position: fixed;
+        }
+
+        .farmer-dock {
+            bottom: 10px;
+        }
+
+        .num-dock {
+            position: absolute;
+            border-radius: 30px;
+            color: white;
+            /* border: 2px solid black; */
+            font-size: 30px;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            background-color: #3496cb;
+        }
+
+        #num0 {
+            bottom: 75px;
+        }
+
+        #num1 {
+            bottom: 135px;
+        }
+
+        #num2 {
+            bottom: 195px;
+        }
+
+        #num3 {
+            bottom: 255px;
+        }
+
+        #num4 {
+            bottom: 315px;
+        }
+
+        #num5 {
+            bottom: 375px;
+        }
+
+        #num-costum {
+            bottom: 435px;
+        }
+
+        button {
+            font-size: 24px;
+            text-align: center;
+            cursor: pointer;
+            outline: none;
+            color: #fff;
+            background-color: #04AA6D;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 7px #999;
+        }
+
+        button:hover {
+            background-color: #3e8e41
+        }
+
+        button:active {
+            background-color: #3e8e41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        .all-sug {
+            width: 20vw;
+            height: 172px;
+            border: 2px solid black;
+            border-radius: 30px;
+            position: absolute;
+            left: 73vw;
+            bottom: -54px;
+            background-color: #e4f6ff;
+            font-size: 30px;
+            padding: 10px;
+
+        }
+
+        .right-sug {
+            float: right;
+        }
+
+        .sug {
+            margin: 15px;
+        }
+
+        #p1 {
+            color: blue;
+        }
+
+        #p2 {
+            color: green;
+        }
+
+        #p3 {
+            color: purple;
+        }
+
+        #p4 {
+            color: black;
+        }
+
+        #p5 {
+            color: red;
+        }
+
+        #p6 {
+            color: orange;
+        }
+
+        #milk-mom {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+        }
+
+        main {
+            position: absolute;
+            top: 200px;
+            left: 200px;
+            font-size: 20px;
+        }
+    </style>
+{% endblock %}
+{% block javascript %}
+    <script>
+        
+        var myid = 0;
+        var mydata = 0;
+        var suggest = 0;
+
+        function getId() {
+            myid = parseInt(prompt("Please enter your id:"));
+        }
+
+        function get_inf() {
+
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'getinf' %}",
+                data: {
+                    'id': myid
+                },
+                success: function (response) {
+                    $("#milk").html(response['instance']["milk"]);
+                    // document.getElementById("milk").innerHTML = response['instance']["milk"];
+                    // document.getElementById("money").innerHTML = response['instance']["money"];
+                    // document.getElementById("cow").innerHTML = response['instance']["cow"];
+                    // document.getElementById("precow").innerHTML = response['instance']["precow"];
+                    // document.getElementById("grass").innerHTML = response['instance']["grass"];
+                },
+                error: function (response) {
+                    alert("err");
+                }
+            });
+
+        }
+
+
+        $(document).ready(function () {
+            getId();
+            // setInterval(get_inf, 10000);
+
+        });
+        
+        function num(n) {
+            if (n == 0) {
+                suggest = parseInt(prompt('Enter your number'))
+            } else {
+                suggest = n;
+            }
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container" style="position: relative;">
+        <header class="header">
+            <span class="dock-mom top-dock">
+                <img src="../static/images/money.png" alt="money">
+                <span class="dock-number" id="money">
+                    5
+                </span>
+            </span>
+            <span class="dock-mom top-dock calender-dock">
+                <img id="calender-img" src="../static/images/calendar.png" alt="money">
+                <span class="dock-number" id="day">
+                    5
+                </span>
+            </span>
+        </header>
+        <main>
+            <div class="milk-mom">
+                milk:<span id="milk">4</span>
+            </div>
+            <div class="cow-mom">
+                cow:<span id="cow">2</span>
+            </div>
+            <div class="precow-mom">
+                precow:<span id="precow">0</span>
+            </div>
+            <div class="grass-mom">
+                grass:<span id="grass">4</span>
+            </div>
+        </main>
+        <footer class="footer">
+            <span class="dock-mom top-dock farmer-dock">
+                <img id="farmer-img" src="../static/images/farmer.png" alt="money">
+                <span class="dock-number" id="grasssug">
+                    5
+                </span>
+            </span>
+            <span class="dock-mom top-dock icecream-dock">
+                <img id="icecream-img" src="../static/images/icecream.png" alt="money">
+                <span class="dock-number" id="milksug">
+                    5
+                </span>
+            </span>
+            <button class="num-dock" id="num0" onclick="num(0)">0</button>
+            <button class="num-dock" id="num1" onclick="num(1)">1</button>
+            <button class="num-dock" id="num2" onclick="num(2)">2</button>
+            <button class="num-dock" id="num3" onclick="num(3)">3</button>
+            <button class="num-dock" id="num4" onclick="num(4)">4</button>
+            <button class="num-dock" id="num5" onclick="num(5)">5</button>
+            <button class="num-dock" id="num-costum" onclick="num(-1)">cst</button>
+            <div class="all-sug">
+                <span class="sug" id="p1">1</span> <span class="sug" id="p2">2</span>
+                <br><br>
+                <span class="sug" id="p3">3</span> <span class="sug" id="p4">4</span>
+                <br><br>
+                <span class="sug" id="p5">5</span> <span class="sug" id="p6">6</span>
+            </div>
+        </footer>
+    </div>
+{% endblock %}
